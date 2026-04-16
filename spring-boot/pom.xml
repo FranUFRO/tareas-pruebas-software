@@ -64,9 +64,9 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.jqwik</groupId>
-			<artifactId>jqwik</artifactId>
-			<version>1.8.2</version> <scope>test</scope>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
