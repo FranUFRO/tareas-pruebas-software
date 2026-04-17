@@ -4,6 +4,8 @@ import com.tarea_property_based_testing.spring_boot.usuario.entity.Usuario;
 import com.tarea_property_based_testing.spring_boot.usuario.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioService {
 
@@ -28,5 +30,15 @@ public class UsuarioService {
         }
     }
 
+    public Usuario crear(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+    public Optional<Usuario> obtenerPorId(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
+    public Iterable<Usuario> obtenerTodos() {
+        return usuarioRepository.findAll();
+    }
 
 }
