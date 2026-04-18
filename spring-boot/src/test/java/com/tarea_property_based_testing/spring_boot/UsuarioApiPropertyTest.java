@@ -85,6 +85,44 @@ public class UsuarioApiPropertyTest {
                 .as((nombre, email, contraseña) -> new Usuario(null, nombre, email, contraseña));
     }
 
+    @Property(tries = 20)
+    void crearUsuario(
+        @ForAll("usuariosNuevos") Usuario usuario) throws Exception {
+                String json = objectMapper.writeValueAsString(usuario);
+                mockMvc.perform(post("/api/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.nombre").value(usuario.getNombre()))
+                .andExpect(jsonPath("$.email").value(usuario.getEmail()))
+                .andExpect(jsonPath("$.contraseña").value(usuario.getContraseña()))
+                .andExpect(result -> {
+                        String response = result.getResponse().getContentAsString();
+                        Usuario creado = objectMapper.readValue(response, Usuario.class);
+                        assert usuarioRepository.existsById(creado.getId());
+                });
+        }
+
+    @Property(tries = 20)
+    void obtenerUsuarioPorId(
+        @ForAll("usuariosNuevos") Usuario usuario) throws Exception {
+                String jsonCrear = objectMapper.writeValueAsString(usuario);
+                MvcResult resultadoCrear = mockMvc.perform(post("/api/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonCrear))
+                .andExpect(status().isCreated())
+                .andReturn();
+                Usuario creado = objectMapper.readValue(
+                        resultadoCrear.getResponse().getContentAsString(), Usuario.class);
+                Long id = creado.getId();
+                mockMvc.perform(get("/api/usuarios/{id}", id))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id").value(id))
+                        .andExpect(jsonPath("$.nombre").value(usuario.getNombre()))
+                        .andExpect(jsonPath("$.email").value(usuario.getEmail()))
+                        .andExpect(jsonPath("$.contraseña").value(usuario.getContraseña()));
+        }
 
     @Property(tries = 20)
     void actualizarNombreDeUsuario(
