@@ -1,1 +1,1 @@
-# tarea-property-based-testing
+# tarea pŕuebas de humo
