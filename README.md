@@ -1,4 +1,4 @@
-# tarea pŕuebas de humo
+# tarea pruebas de humo
 Contexto
 
 Cada equipo (compuesto de máximo 2 estudiantes) debe construir una API que, a partir de contenidos/temas de una asignatura y parámetros de planificación (p. ej., número de semanas, dedicación semanal), genere un plan de estudio organizado por semanas.
