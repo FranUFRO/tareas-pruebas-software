@@ -1,66 +1,48 @@
-# tarea pruebas de humo
-Contexto
+Integrantes: 
+- Francisca Neira
+- Ian Cicarelli
 
-Cada equipo (compuesto de máximo 2 estudiantes) debe construir una API que, a partir de contenidos/temas de una asignatura y parámetros de planificación (p. ej., número de semanas, dedicación semanal), genere un plan de estudio organizado por semanas.
-La “lógica de recomendación” será mediante LLM vía OpenRouter (con API key en variables de entorno).
+Instalación y como ejecutar
 
-No se pide interfaz ni chatbot funcional; sólo API que dada una solicitud devuelva un plan estructurado.
 
-Objetivos
+```bash
+git clone https://github.com/FranUFRO/tareas-pruebas-software.git 
+cd .\tareas-pruebas-software\study_planner\ 
+npm install
+```
 
-Diseñar una API mínima y estable que convierta “temas + parámetros” → “plan de estudio por semanas”.
+Crear archivo .env en raiz del proyecto y poner:
+```bash
+PORT=3000
+OPENROUTER_API_KEY= "api key propia"
+OPENROUTER_MODEL= "ruta modelo"
+```
 
-Integrar OpenRouter de forma segura (.env / variables de entorno, sin credenciales en el repo).
+Ejecutar proyecto y pruebas de humo:
 
-Validar lo esencial con pruebas de humo en Cypress (sólo API).
+primera terminal
+```bash
+cd .\tareas-pruebas-software\study_planner\ 
+npm run start:dev
+```
+Imagen:
+![primera terminal](./fotos/imagen1.png)
 
-Qué se debe definir
 
-Entradas:
+segunda terminal
+```bash
+cd .\tareas-pruebas-software\study_planner\ 
+npx cypress open
+```
+Imagen:
+![terminal cypress](./fotos/image2.png)
 
-Lista de tópicos/temas.
 
-Cantidad de semanas y dedicación semanal (o equivalente).
+Abre cypress visual y selecciona E2E 
+![inicio cypress](./fotos/image3.png)
 
-Fecha de inicio/restricciones opcionales (feriados, semanas bloqueadas, hitos).
+Se ejecutan las pruebas
+![pruebas de humo](./fotos/image4.png)
 
-Salida (ustedes definen el formato):
 
-Plan por semanas con objetivos/actividades y estimaciones.
 
-Cobertura: todos los temas asignados en alguna semana.
-
-Metadatos: origen de la recomendación ("llm"), fecha de generación.
-
-Validaciones que sí o sí deben cubrir los smoke tests (Cypress, API)
-
-Disponibilidad
-
-Un recurso de salud/estado responde 200 e informa el estado de la conexión con el modelo LLM.
-
-Entradas
-
-Solicitud inválida → 4xx con mensajes claros.
-
-Solicitud válida → 2xx y cuerpo con el esquema documentado.
-
-Coherencia del plan
-
-Cantidad de semanas devueltas = solicitadas.
-
-Todos los tópicos aparecen planificados.
-
-Cada semana incluye actividades y estimaciones (no vacías).
-
-La carga semanal respeta la dedicación (con tolerancia definida por ustedes).
-
-Existe al menos una instancia de repaso/evaluación.
-
-No imponemos nombres de rutas ni campos; sólo que documenten su contrato y lo prueben.
-
-Entregables
-Código de la API con configuración por entorno (.env para la API key de OpenRouter si la usan).
-
-README con: cómo correr local y cómo ejecutar los smoke tests. Además debe incluir evidencia de la ejecución del sistema.
-
-Pruebas de humo (Cypress) que cubran las validaciones del bloque anterior.
